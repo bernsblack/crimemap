@@ -74,12 +74,12 @@
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat:  37.775, lng: -122.417},
             zoom: 13,
-            mapTypeId: 'satellite',
+//            mapTypeId: 'satellite',
             streetViewControl: false,
             draggable: false,
-            zoomControl: false, //should add back
-            scrollwheel: false,
-            disableDoubleClickZoom: true
+//            zoomControl: false, //should add back
+//            scrollwheel: false,
+//            disableDoubleClickZoom: true
         });
 
         var bounds = {
@@ -88,9 +88,39 @@
           east: -122.3984,
           west: -122.44301
         };
+        
+        var n = 20;
+        var x_size = (bounds.east - bounds.west)/n
+        var y_size = (bounds.north - bounds.south)/n
 
         // Display the area between the location southWest and northEast.
         map.fitBounds(bounds);
+        
+        //draw the grids
+        var rectangles = [];
+        for (var i = 0; i < n; i++) {
+            for (var j = 0; j < n; j++) {
+                rectangles.push(
+                    new google.maps.Rectangle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.15,
+                        map: map,
+                        bounds: {
+                          north: 37.7872 - j*y_size,
+                          south: 37.7872 - (j+1)*y_size,
+                          east: -122.44301 + (i+1)*x_size,
+                          west: -122.44301 + i*x_size
+                        }
+                    })
+                );  
+            }
+
+        }
+        
+                
 
         // Add map on-click listner
         map.addListener('click', function(e) {
