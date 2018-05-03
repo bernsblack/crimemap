@@ -99,55 +99,60 @@
         map.fitBounds(bounds);
         
         //draw the grids
+        var grid_states = [];
         var rectangles = [];
+        
+        
         for (var i = 0; i < n; i++) {
-            var row = []
+            var row = [];
             for (var j = 0; j < n; j++) {
-                row.push(
-                    new google.maps.Rectangle({
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.3,
-                        strokeWeight: 2,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0.3,
-                        map: map,
-                        bounds: {
-                          north: 37.7872 - i*y_size,
-                          south: 37.7872 - (i+1)*y_size,
-                          east: -122.44301 + (j+1)*x_size,
-                          west: -122.44301 + j*x_size
-                        }
-                    })
-                );  
+                if (Math.random() > 0.) {
+                    rand_opacity = Math.random()*0.5 + 0.1
+                    row.push(
+                        new google.maps.Rectangle({
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 0.3,
+                            strokeWeight: 1,
+                            fillColor: '#FF0000',
+                            fillOpacity: rand_opacity,
+                            map: map,
+                            bounds: {
+                              north: 37.7872 - i*y_size,
+                              south: 37.7872 - (i+1)*y_size,
+                              east: -122.44301 + (j+1)*x_size,
+                              west: -122.44301 + j*x_size
+                            }
+                        })
+                    );                      
+                }
+
             }
             rectangles.push(row);
         }
         
         
         
-        
-//         Add shape on-click listner
-        rectangles[0][0].addListener('click', function(e) {
-//          placeMarker(e.latLng, map);
-            makeDarker(rectangles[0][0]);
-        });
-        
+//      Add shape on-click listner
+//        rectangles[2][0].addListener('click', function(e) {
+////                  placeMarker(e.latLng, map);
+//            rectangles[0][0].setOptions({
+//              fillColor: '#00FF00',
+//            });
+//            alert("roger");
+//        });   
+//        
 
         // Add map on-click listner
 //        map.addListener('click', function(e) {
 //          placeMarker(e.latLng, map);
 //        });
-    }
-
-    function makeDarker(rect) {
-        rect.fillOpacity = 0.9
-    }
+//    
         
-    function placeMarker(latLng, map) {
-        var marker = new google.maps.Marker({
-          position: latLng,
-          map: map
-        });
+//    function placeMarker(latLng, map) {
+//        var marker = new google.maps.Marker({
+//          position: latLng,
+//          map: map
+//        });
     }
 
 
